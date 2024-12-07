@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Viajes Istanbul</title>
+    <!-- Enlace a Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!-- estilos CSS -->
+    <style>
+        /* Estilos Generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+
+        header {
+            background-color: rgba(26, 115, 232, 0.85);
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        header .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            max-height: 80px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-top: 60px;
+        }
+
+        nav {
+            position: relative;
+        }
+
+        #menu {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav ul li a,
+        header .boton,
+        .seccion .boton,
+        form input[type="submit"] {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            font-size: 1.1em;
+        }
+
+        nav ul li a:hover {
+            color: #ffeb3b;
+        }
+
+        header .boton:hover,
+        .seccion .boton:hover,
+        form input[type="submit"]:hover {
+            background-color: #1558b0;
+        }
+
+        header .boton {
+            position: absolute;
+            top: 25px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #ffeb3b;
+            color: #1a73e8;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        header .boton:hover {
+            background-color: #ffd600;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            width: 30px;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .menu-toggle span {
+            height: 3px;
+            background: white;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .seccion {
+            margin-bottom: 60px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 40px 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .seccion h2 {
+            font-size: 2.2em;
+            color: #1a73e8;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .seccion p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .seccion img {
+            transition: transform 0.3s ease;
+            max-width: 100%;
+            height: auto;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .seccion img:hover {
+            transform: scale(1.05);
+        }
+
+        .seccion .boton {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #1a73e8;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: background-color 0.3s ease;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 40px 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        form input[type="text"],
+        form input[type="number"],
+        form input[type="date"],
+        form select {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        form input[type="submit"] {
+            width: 100%;
+            background-color: #1a73e8;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        footer {
+            background-color: rgba(44, 44, 44, 0.9);
+            color: #ccc;
+            text-align: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        /* Estilos Responsivos */
+        @media (max-width: 768px) {
+            #menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100%;
+                width: 200px;
+                background-color: rgba(26, 115, 232, 0.95);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 20px;
+                transition: right 0.3s ease;
+            }
+
+            #menu.show {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            header h1 {
+                font-size: 2em;
+                margin-top: 50px;
+            }
+
+            .seccion {
+                margin-bottom: 40px;
+                padding: 30px 15px;
+            }
+        }
+
+        /* Estilos para el icono del menú activo */
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        @media (max-width: 480px) {
+            header .logo {
+                max-height: 60px;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+                margin-top: 40px;
+            }
+
+            form {
+                padding: 30px 20px;
+            }
+
+            form input[type="submit"] {
+                font-size: 1em;
+            }
+
+            header .boton {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Animaciones */
+        .animado {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .animado.mostrar {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #1a73e8;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #preloader .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #ffeb3b;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: girar 1s linear infinite;
+        }
+
+        @keyframes girar {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <header>
+        <img src="logo.jpg" alt="Logo Viajes Istanbul" class="logo">
+        <h1>Bienvenidos a Viajes Istanbul!</h1>
+        <nav>
+            <ul id="menu">
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Sobre Nosotros</a></li>
+                <li><a href="#">Destinos</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+        <a href="registro.html" class="boton">Iniciar Sesión</a>
+    </header>
+
+    <main>
+        <section class="seccion animado">
+            <h2>Explora Turquía con Nosotros</h2>
+            <p>Ofrecemos paquetes turísticos personalizados para que descubras la magia de Turquía.</p>
+        </section>
+
+        <section class="seccion animado">
+            <h2>Buscar Viajes</h2>
+            <form method="get" action="#">
+                <label for="destino">Destino:</label>
+                <select id="destino" name="destino">
+                    <option value="">Seleccione un destino</option>
+                    <option value="estambul">Estambul</option>
+                    <option value="capadocia">Capadocia</option>
+                    <option value="antalya">Antalya</option>
+                    <option value="efeso">Éfeso</option>
+                </select>
+
+                <label for="precio">Precio Máximo (€):</label>
+                <input type="number" id="precio" name="precio" min="0" step="50" placeholder="Ej. 500">
+
+                <label for="fecha">Fecha de Viaje:</label>
+                <input type="date" id="fecha" name="fecha">
+
+                <label for="tipo">Tipo de Viaje:</label>
+                <select id="tipo" name="tipo">
+                    <option value="">Seleccione un tipo</option>
+                    <option value="aventura">Aventura</option>
+                    <option value="cultural">Cultural</option>
+                    <option value="playa">Playa</option>
+                    <option value="gastronomico">Gastronómico</option>
+                </select>
+
+                <input type="submit" value="Buscar">
+            </form>
+        </section>
+
+        <section class="seccion animado">
+            <h2>Vuelos Baratos</h2>
+            <img src="image_1.jpg" alt="Imagen de vuelos baratos">
+            <p>Encuentra las mejores ofertas en vuelos a Turquía. Compara precios y elige la opción que más te convenga.</p>
+            <a href="vuelos_baratos.html" class="boton">Ver Vuelos Baratos</a>
+        </section>
+
+        <section class="seccion animado">
+            <h2>Vuelos + Hotel</h2>
+            <img src="image_2.jpg" alt="Imagen de paquetes de vuelo y hotel">
+            <p>Ahorra más al reservar tu vuelo y hotel juntos. Descubre nuestros paquetes combinados para una experiencia completa.</p>
+            <a href="vuelos_hotel.html" class="boton">Ver Paquetes Vuelos + Hotel</a>
+        </section>
+
+        <section class="seccion animado">
+            <h2>Noticias de Turismo en Estambul</h2>
+            <ul id="lista-noticias">
+                <!-- Las noticias se cargarán aquí  -->
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 Viajes Istanbul. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="main.js"></script>
+    <script>
+        // Preloader
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            preloader.style.display = 'none';
+            animarSecciones(); // Aseguramos que se ejecuta después de cargar
+            cargarNoticias();  // Cargamos las noticias
+        });
+
+        // Menú móvil
+        const menuToggle = document.getElementById('menu-toggle');
+        const menu = document.getElementById('menu');
+
+        menuToggle.addEventListener('click', () => {
+            menu.classList.toggle('show');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Animaciones al hacer scroll
+        function animarSecciones() {
+            const elementos = document.querySelectorAll('.animado');
+            const alturaTrigger = window.innerHeight / 1.3;
+
+            elementos.forEach(elemento => {
+                const distanciaTop = elemento.getBoundingClientRect().top;
+                if (distanciaTop < alturaTrigger) {
+                    elemento.classList.add('mostrar');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animarSecciones);
+
+        // Función para cargar noticias de Estambul
+        async function cargarNoticias() {
+            const listaNoticias = document.getElementById('lista-noticias');
+            listaNoticias.innerHTML = '<li>Cargando noticias...</li>';
+
+            try {
+                const respuesta = await fetch('https://newsapi.org/v2/top-headlines?country=tr&apiKey=7106db2417dc45eea1403ac7a4bcb66c');
+                const datos = await respuesta.json();
+
+                listaNoticias.innerHTML = '';
+
+                datos.articles.forEach(articulo => {
+                    const item = document.createElement('li');
+                    const enlace = document.createElement('a');
+                    enlace.href = articulo.url;
+                    enlace.textContent = articulo.title;
+                    enlace.target = '_blank';
+                    item.appendChild(enlace);
+                    listaNoticias.appendChild(item);
+                });
+            } catch (error) {
+                listaNoticias.innerHTML = '<li>No se pudieron cargar las noticias. Por favor, inténtelo más tarde.</li>';
+            }
+        }
+    </script>
+</body>
+</html>

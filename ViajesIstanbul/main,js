@@ -1,0 +1,32 @@
+// Función para animar secciones al hacer scroll
+function animarSecciones() {
+    const elementos = document.querySelectorAll('.animado');
+    const alturaTrigger = window.innerHeight / 1.3;
+
+    elementos.forEach(elemento => {
+        const distanciaTop = elemento.getBoundingClientRect().top;
+        if (distanciaTop < alturaTrigger) {
+            elemento.classList.add('mostrar');
+        }
+    });
+}
+
+// Ejecutar las funciones correspondientes
+window.addEventListener('scroll', animarSecciones);
+window.addEventListener('load', () => {
+    // Ocultar preloader
+    const preloader = document.getElementById('preloader');
+    preloader.style.display = 'none';
+
+    // Animar secciones al cargar la página
+    animarSecciones();
+});
+
+// Menú móvil
+const menuToggle = document.getElementById('menu-toggle');
+const menu = document.getElementById('menu');
+
+menuToggle.addEventListener('click', () => {
+    menu.classList.toggle('show');
+    menuToggle.classList.toggle('active');
+});

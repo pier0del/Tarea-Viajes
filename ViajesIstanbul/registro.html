@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Viajes Istanbul - Autenticación</title>
+    <!-- Enlace a Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!-- estilos CSS integrados -->
+    <style>
+        /* estilos Generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-image: url('background.jpg'); /* Usa el mismo fondo que la página principal */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+
+        header {
+            background-color: rgba(26, 115, 232, 0.85);
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 20px;
+            position: relative;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #ffeb3b;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        section {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 40px 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            flex: 1 1 300px;
+            max-width: 400px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        section.mostrar {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section h2 {
+            font-size: 2em;
+            color: #1a73e8;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        section form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        section form input[type="text"],
+        section form input[type="email"],
+        section form input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        section form input[type="text"]:focus,
+        section form input[type="email"]:focus,
+        section form input[type="password"]:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 0 5px rgba(26, 115, 232, 0.5);
+            outline: none;
+        }
+
+        section form input[type="submit"] {
+            width: 100%;
+            background-color: #1a73e8;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        section form input[type="submit"]:hover {
+            background-color: #1558b0;
+        }
+
+        section a {
+            color: #1a73e8;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s ease;
+        }
+
+        section a:hover {
+            color: #1558b0;
+        }
+
+        footer {
+            background-color: rgba(44, 44, 44, 0.9);
+            color: #ccc;
+            text-align: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        /* estilos para ocultar y mostrar la sección de recuperación */
+        #recuperar-password {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        #recuperar-password.mostrar {
+            max-height: 500px; 
+            opacity: 1;
+        }
+
+        /* Estilos para el enlace "Cerrar" */
+        .cerrar-recuperar {
+            display: block;
+            text-align: right;
+            margin-top: -20px;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            color: #333;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .cerrar-recuperar:hover {
+            color: #1a73e8;
+        }
+
+        /* Estilos Responsivos */
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+                align-items: center;
+                padding: 40px 20px;
+            }
+
+            section {
+                max-width: 100%;
+                margin-bottom: 40px;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Viajes Istanbul</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="#">Sobre Nosotros</a></li>
+                <li><a href="#">Destinos</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="registro" class="animado">
+            <h2>Registro</h2>
+            <form method="post" action="#">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+
+                <input type="submit" value="Registrarse">
+            </form>
+        </section>
+        <section id="inicio-sesion" class="animado">
+            <h2>Inicio de Sesión</h2>
+            <form method="post" action="#">
+                <label for="email-login">Correo Electrónico:</label>
+                <input type="email" id="email-login" name="email" required>
+
+                <label for="password-login">Contraseña:</label>
+                <input type="password" id="password-login" name="password" required>
+
+                <input type="submit" value="Iniciar Sesión">
+                <a href="#" id="olvido-password">¿Olvidaste tu contraseña?</a>
+            </form>
+        </section>
+        <section id="recuperar-password">
+            <span class="cerrar-recuperar" id="cerrar-recuperar">&times;</span>
+            <h2>Recuperación de Contraseña</h2>
+            <form method="post" action="#">
+                <label for="email-recuperar">Correo Electrónico:</label>
+                <input type="email" id="email-recuperar" name="email" required>
+
+                <input type="submit" value="Recuperar Contraseña">
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 Viajes Istanbul. Todos los derechos reservados.</p>
+    </footer>
+    <!-- JavaScript para animar las secciones y mostrar la recuperación de contraseña -->
+    <script>
+        // Función para animar secciones al hacer scroll
+        function animarSecciones() {
+            const elementos = document.querySelectorAll('.animado');
+            const alturaTrigger = window.innerHeight / 1.3;
+
+            elementos.forEach(elemento => {
+                const distanciaTop = elemento.getBoundingClientRect().top;
+                if (distanciaTop < alturaTrigger) {
+                    elemento.classList.add('mostrar');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animarSecciones);
+        window.addEventListener('load', animarSecciones);
+
+        // mostrar y ocultar la sección de recuperación de contraseña
+        const linkOlvidoPassword = document.getElementById('olvido-password');
+        const seccionRecuperar = document.getElementById('recuperar-password');
+        const cerrarRecuperar = document.getElementById('cerrar-recuperar');
+
+        linkOlvidoPassword.addEventListener('click', function(event) {
+            event.preventDefault();
+            seccionRecuperar.classList.add('mostrar');
+            seccionRecuperar.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        cerrarRecuperar.addEventListener('click', function() {
+            seccionRecuperar.classList.remove('mostrar');
+        });
+    </script>
+</body>
+</html>
